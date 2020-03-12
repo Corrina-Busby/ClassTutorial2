@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
+/// <summary>
+/// remove the static vars, replacing their use w/ ref to the comparer classes' public instance variables
+/// </summary>
 
 namespace Version_2_C
 {
     [Serializable()]
     public class clsWorksList : List<clsWork>
     {
-        private static clsNameComparer _NameComparer = new clsNameComparer();
-        private static clsDateComparer _DateComparer = new clsDateComparer();
+        //private static clsNameComparer _NameComparer = new clsNameComparer();
+        //private static clsDateComparer _DateComparer = new clsDateComparer();
         private byte _SortOrder;
 
         public void AddWork(char prChoice)
@@ -42,13 +45,13 @@ namespace Version_2_C
 
         public void SortByName()
         {
-            Sort(_NameComparer);
+            Sort(clsNameComparer.Instance);
             _SortOrder = 0;
         }
 
         public void SortByDate()
         {
-            Sort(_DateComparer);
+            Sort(clsDateComparer.Instance);     
             _SortOrder = 1;
         }
 

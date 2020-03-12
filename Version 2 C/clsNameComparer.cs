@@ -10,7 +10,7 @@ namespace Version_2_C
 
         }
 
-        public static readonly clsNameComparer instance = new clsNameComparer();
+        public static readonly clsNameComparer Instance = new clsNameComparer();
 
         public int Compare(clsWork x, clsWork y)
         {

@@ -10,7 +10,7 @@ namespace Version_2_C
 
         }
 
-        public static readonly clsDateComparer instance = new clsDateComparer();
+        public static readonly clsDateComparer Instance = new clsDateComparer();
         public int Compare(clsWork x, clsWork y)
         {
             // long version:
