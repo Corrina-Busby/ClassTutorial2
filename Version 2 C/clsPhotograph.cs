@@ -9,14 +9,14 @@ namespace Version_2_C
         private float _Height;
         private string _Type;
 
-        [NonSerialized()]
-        private frmPhotograph _PhotoDialog;
+        //[NonSerialized()]
+        //private frmPhotograph _PhotoDialog;
 
         public override void EditDetails()
         {
-            if (_PhotoDialog == null)
-                _PhotoDialog = new frmPhotograph();
-            _PhotoDialog.SetDetails(this);
+            if (frmPhotograph.Instance == null)
+               // _PhotoDialog = new frmPhotograph();
+            frmPhotograph.Instance.SetDetails(this);
         }
 
         public Single Width

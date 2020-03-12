@@ -9,15 +9,13 @@ namespace Version_2_C
         private float _Height;
         private string _Type;
 
-
-        [NonSerialized()]
-        private static frmPainting _PaintDialog;
-
+        //[NonSerialized()]
+        //private static frmPainting _PaintDialog;
         public override void EditDetails()
         {
-            if (_PaintDialog == null)
-                _PaintDialog = new frmPainting();
-            _PaintDialog.SetDetails(this);
+            if (frmPainting.Instance == null)
+             //  frmPainting.Instance = new frmPainting.Instance();
+            frmPainting.Instance.SetDetails(this);
         }
 
         public Single Width

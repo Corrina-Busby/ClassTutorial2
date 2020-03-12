@@ -8,14 +8,14 @@ namespace Version_2_C
         private float _Weight;
         private string _Material;
 
-        [NonSerialized()]
-        private static frmSculpture _SculptureDialog;
+        //[NonSerialized()]
+        //private static frmSculpture _SculptureDialog;
 
         public override void EditDetails()
         {
-            if (_SculptureDialog == null)
-                _SculptureDialog = new frmSculpture();
-            _SculptureDialog.SetDetails(this);
+            if (frmSculpture.Instance == null)
+              //  _SculptureDialog = new frmSculpture();
+            frmSculpture.Instance.SetDetails(this);
         }
 
         public Single Weight
