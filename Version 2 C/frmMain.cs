@@ -11,10 +11,10 @@ namespace Version_2_C
         }
         private static readonly frmMain _Instance = new frmMain();
 
-        private clsArtistList _ArtistList = new clsArtistList();
         // need to enscapsulate field and extract a getter due to coming from the program.cs
         public static frmMain Instance => _Instance;
 
+        private clsArtistList _ArtistList = new clsArtistList();
         private void updateDisplay()
         {
             lstArtists.DataSource = null;
