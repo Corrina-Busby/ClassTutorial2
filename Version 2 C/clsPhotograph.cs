@@ -1,10 +1,14 @@
 using System;
-
+/// <summary>
+/// Singleton and Observer Pattern applied here
+/// </summary>
 namespace Version_2_C
 {
     [Serializable()]
     public class clsPhotograph : clsWork
     {
+        public delegate void LoadPhotographFormDelegate(clsPhotograph prPhotograph);
+        public static LoadPhotographFormDelegate LoadPhotographForm;
         private float _Width;
         private float _Height;
         private string _Type;
@@ -14,9 +18,7 @@ namespace Version_2_C
 
         public override void EditDetails()
         {
-            if (frmPhotograph.Instance == null)
-               // _PhotoDialog = new frmPhotograph();
-            frmPhotograph.Instance.SetDetails(this);
+            LoadPhotographForm(this);
         }
 
         public Single Width

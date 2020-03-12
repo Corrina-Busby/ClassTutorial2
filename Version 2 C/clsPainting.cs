@@ -1,6 +1,6 @@
 using System;
 /// <summary>
-/// Singleton and Obsever Pattern 
+/// Singleton and Observer Pattern 
 /// </summary>
 namespace Version_2_C
 {

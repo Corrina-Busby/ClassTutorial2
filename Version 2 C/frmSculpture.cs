@@ -7,6 +7,11 @@ namespace Version_2_C
             InitializeComponent();
         }
         public static readonly frmSculpture Instance = new frmSculpture();
+
+        public static void Run(clsSculpture prSculpture)
+        {
+            Instance.SetDetails(prSculpture);
+        }
         protected override void updateForm()
         {
             base.updateForm();
