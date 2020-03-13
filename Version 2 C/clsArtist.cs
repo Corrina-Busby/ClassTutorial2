@@ -15,7 +15,7 @@ namespace Version_2_C
         private clsWorksList _WorksList;
         private clsArtistList _ArtistList;
 
-        private static frmArtist _ArtistDialog = new frmArtist();
+        //private static frmArtist _ArtistDialog = new frmArtist();
 
         public clsArtist() { }
 
@@ -23,14 +23,21 @@ namespace Version_2_C
         {
             _WorksList = new clsWorksList();
             _ArtistList = prArtistList;
-            EditDetails();
+            //EditDetails();
         }
 
-        public void EditDetails()
+        public void NewArtist()
         {
-            _ArtistDialog.SetDetails(this);
-            _TotalValue = _WorksList.GetTotalValue();
+            if (!string.IsNullOrEmpty(Name))
+                _ArtistList.Add(Name, this);
+            else
+                throw new Exception("No artist name entered");
         }
+        //public void EditDetails()
+        //{
+        //    _ArtistDialog.SetDetails(this);
+        //    _TotalValue = _WorksList.GetTotalValue();
+        //}
 
         public bool IsDuplicate(string prArtistName)
         {
@@ -57,7 +64,7 @@ namespace Version_2_C
 
         public decimal TotalValue
         {
-            get { return _TotalValue; }
+            get { return _WorksList.GetTotalValue(); }
         }
 
         public clsWorksList WorksList

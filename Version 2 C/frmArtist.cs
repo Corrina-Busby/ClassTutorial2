@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
-
+/// <summary>
+/// feature: more than one artist form at the same time
+/// </summary>
 namespace Version_2_C
 {
     public partial class frmArtist : Form
@@ -12,8 +15,24 @@ namespace Version_2_C
 
         private clsArtist _Artist;
         private clsWorksList _WorksList;
-
-
+        // clsArtist is the key, frmArtist is the value that we want instances to be stored maybe...?
+        private static Dictionary<clsArtist, frmArtist> _ArtistFormList = new Dictionary<clsArtist, frmArtist>();
+        
+        public static void Run(clsArtist prArtist)
+        {
+            frmArtist lcArtistForm;
+            if (!_ArtistFormList.TryGetValue(prArtist, out lcArtistForm))
+            {
+                lcArtistForm = new frmArtist();
+                _ArtistFormList.Add(prArtist, lcArtistForm);
+                lcArtistForm.SetDetails(prArtist);
+            }
+            else
+            {
+                lcArtistForm.Show();
+                lcArtistForm.Activate();
+            }
+        }
         private void updateDisplay()
         {
             txtName.Enabled = txtName.Text == "";
@@ -36,9 +55,10 @@ namespace Version_2_C
         public void SetDetails(clsArtist prArtist)
         {
             _Artist = prArtist;
+            txtName.Enabled = string.IsNullOrEmpty(_Artist.Name);
             updateForm();
             updateDisplay();
-            ShowDialog();
+            Show();
         }
 
         private void updateForm()
@@ -63,7 +83,7 @@ namespace Version_2_C
             if (lcIndex >= 0 && MessageBox.Show("Are you sure?", "Deleting work", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 _WorksList.RemoveAt(lcIndex);
-                updateDisplay();
+                frmMain.Instance.updateDisplay();
             }
         }
 
@@ -73,17 +93,29 @@ namespace Version_2_C
             if (!string.IsNullOrEmpty(lcReply))
             {
                 _WorksList.AddWork(lcReply[0]);
-                updateDisplay();
+                frmMain.Instance.updateDisplay();
             }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
-        {
+        { //frm close() to hide() for the special feature to work(open multiple frmArtist forms)
             if (isValid() == true)
-            {
-                pushData();
-                Close();
-            }
+                try
+                {
+                    pushData();
+                    if (txtName.Enabled)
+                    {
+                        _Artist.NewArtist();
+                        MessageBox.Show("Artist added!", "Success");
+                        frmMain.Instance.updateDisplay();
+                        txtName.Enabled = false;
+                    }
+                    Hide();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
         }
 
         private Boolean isValid()
