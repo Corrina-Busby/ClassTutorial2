@@ -15,6 +15,7 @@ namespace Version_2_C
 
         private clsArtist _Artist;
         private clsWorksList _WorksList;
+
         // clsArtist is the key, frmArtist is the value that we want instances to be stored maybe...?
         private static Dictionary<clsArtist, frmArtist> _ArtistFormList = new Dictionary<clsArtist, frmArtist>();
         
@@ -52,6 +53,12 @@ namespace Version_2_C
             lblTotal.Text = Convert.ToString(_WorksList.GetTotalValue());
         }
 
+        private void updateTitle(string prGalleryName)
+        {
+            if (!string.IsNullOrEmpty(prGalleryName))
+                Text = "Artist Details - " + prGalleryName;
+        }
+
         public void SetDetails(clsArtist prArtist)
         {
             _Artist = prArtist;
@@ -59,6 +66,8 @@ namespace Version_2_C
             updateForm();
             updateDisplay();
             Show();
+            frmMain.Instance.GalleryNameChanged += new frmMain.Notify(updateTitle);
+            updateTitle(_Artist.ArtistList.GalleryName);
         }
 
         private void updateForm()

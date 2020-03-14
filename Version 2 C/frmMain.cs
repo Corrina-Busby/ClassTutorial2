@@ -11,6 +11,10 @@ namespace Version_2_C
         }
         private static readonly frmMain _Instance = new frmMain();
 
+        // Observer pattern from the behavioral catergory Change name on frmMain and have it change on all forms subscribed
+        public delegate void Notify(string prGalleryName);
+        public event Notify GalleryNameChanged;
+
         // need to enscapsulate field and extract a getter due to coming from the program.cs
         public static frmMain Instance => _Instance;
 
@@ -89,6 +93,11 @@ namespace Version_2_C
                 }
         }
 
+        private void updateTitle(string prGalleryName)
+        {
+            if (!string.IsNullOrEmpty(prGalleryName))
+                Text = "Gallery - " + prGalleryName;
+        }
         private void frmMain_Load(object sender, EventArgs e)
         {
             try
@@ -101,6 +110,14 @@ namespace Version_2_C
                 MessageBox.Show(ex.Message, "File retrieve error");
             }
             updateDisplay();
+            GalleryNameChanged += new Notify(updateTitle);
+            GalleryNameChanged(_ArtistList.GalleryName); // event raising!
+        }
+
+        private void btnUpdateGalleryName_Click(object sender, EventArgs e)
+        {
+           _ArtistList.GalleryName = txtGalleryName.Text;
+           GalleryNameChanged(_ArtistList.GalleryName);     
         }
     }
 }
